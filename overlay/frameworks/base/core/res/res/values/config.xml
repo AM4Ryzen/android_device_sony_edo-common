@@ -157,6 +157,12 @@
     -->
     <bool name="config_wifiDisplaySupportsProtectedBuffers">true</bool>
 
+    <!-- Enable ACS (auto channel selection) for Wifi hotspot (SAP) -->
+    <bool translatable="false" name="config_wifi_softap_acs_supported">false</bool>
+
+    <!-- Enable 802.11ac for Wifi hotspot (SAP) -->
+    <bool translatable="false" name="config_wifi_softap_ieee80211ac_supported">true</bool>
+
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
 
@@ -427,13 +433,6 @@
          dark rooms. The contents of the screen must still be clearly visible
          in darkness (although they may not be visible in a bright room). -->
     <integer name="config_screenBrightnessDark">2</integer>
-
-    <!-- Enable ACS (auto channel selection) for Wifi hotspot (SAP) -->
-    <bool translatable="false" name="config_wifi_softap_acs_supported">false</bool>
-    <!-- Enable 802.11ac for Wifi hotspot (SAP) -->
-    <bool translatable="false" name="config_wifi_softap_ieee80211ac_supported">true</bool>
-     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
-    <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
 
     <!-- The default refresh rate for a given device. Change this value to set a higher default
          refresh rate. If the hardware composer on the device supports display modes with a higher
