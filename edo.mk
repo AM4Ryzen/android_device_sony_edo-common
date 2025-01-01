@@ -61,10 +61,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.adb.secure=0
 endif
 
-# ANT+
-#PRODUCT_PACKAGES += \
-#    AntHalService
-
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
