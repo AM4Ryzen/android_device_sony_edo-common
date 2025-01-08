@@ -111,6 +111,7 @@ PRODUCT_PACKAGES += \
 # Boot control
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl.recovery \
+    bootctrl.kona \
     bootctrl.kona.recovery
 
 PRODUCT_PACKAGES_DEBUG += \
