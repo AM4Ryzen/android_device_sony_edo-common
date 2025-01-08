@@ -331,7 +331,7 @@
     <!-- Screen brightness used to dim the screen while dozing in a very low power state.
          May be less than the minimum allowed brightness setting
          that can be set by the user. -->
-    <integer name="config_screenBrightnessDoze">17</integer>
+    <integer name="config_screenBrightnessDoze">1</integer>
 
     <!-- Enable doze mode
          ComponentName of a dream to show whenever the system would otherwise have gone to sleep. -->
@@ -358,19 +358,24 @@
          backlight values for LUX levels between these control points.
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>32</item>
-        <item>64</item>
-        <item>128</item>
-        <item>170</item>
-        <item>220</item>
-        <item>256</item>
-        <item>384</item>
-        <item>512</item>
-        <item>768</item>
-        <item>1024</item>
-        <item>1536</item>
-        <item>2048</item>
-        <item>4096</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>8</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>3000</item>
+        <item>5000</item>
+        <item>7000</item>
+        <item>10000</item>
+        <item>30000</item>
+        <item>50000</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -378,21 +383,70 @@
          than the size of the config_autoBrightnessLevels array.
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
-    <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>3</item>    <!--    0 -->
-        <item>10</item>   <!--   32 -->
-        <item>32</item>   <!--   64 -->
-        <item>64</item>   <!--  128 -->
-        <item>80</item>   <!--  170 -->
-        <item>96</item>   <!--  220 -->
-        <item>112</item>  <!--  256 -->
-        <item>128</item>  <!--  384 -->
-        <item>144</item>  <!--  512 -->
-        <item>176</item>  <!--  768 -->
-        <item>196</item>  <!-- 1024 -->
-        <item>208</item>  <!-- 1536 -->
-        <item>224</item>  <!-- 2048 -->
-        <item>255</item>  <!-- 4096 -->
+    <integer-array name="config_screenBrightnessBacklight">
+        <item>0</item>
+        <item>1</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>75</item>
+        <item>90</item>
+        <item>105</item>
+        <item>120</item>
+        <item>135</item>
+        <item>150</item>
+        <item>165</item>
+        <item>180</item>
+        <item>195</item>
+        <item>210</item>
+        <item>225</item>
+        <item>240</item>
+        <item>255</item>
+    </integer-array>
+
+    <array name="config_screenBrightnessNits">
+        <item>0.0</item>
+        <item>5.0</item>
+        <item>37.8</item>
+        <item>72.93</item>
+        <item>108.07</item>
+        <item>143.21</item>
+        <item>178.35</item>
+        <item>213.48</item>
+        <item>248.62</item>
+        <item>283.76</item>
+        <item>318.9</item>
+        <item>354.04</item>
+        <item>389.17</item>
+        <item>424.31</item>
+        <item>459.45</item>
+        <item>494.59</item>
+        <item>529.72</item>
+        <item>564.86</item>
+        <item>600.0</item>
+    </array>
+
+    <integer-array name="config_autoBrightnessDisplayValuesNits">
+        <item>2</item>
+        <item>2</item>
+        <item>7</item>
+        <item>13</item>
+        <item>27</item>
+        <item>37</item>
+        <item>43</item>
+        <item>97</item>
+        <item>113</item>
+        <item>133</item>
+        <item>143</item>
+        <item>157</item>
+        <item>200</item>
+        <item>343</item>
+        <item>487</item>
+        <item>600</item>
+        <item>720</item>
+        <item>807</item>
+        <item>850</item>
     </integer-array>
 
     <!-- Screen brightness used to dim the screen when the user activity
@@ -402,7 +456,7 @@
 
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
-    <integer name="config_screenBrightnessSettingDefault">128</integer>
+    <integer name="config_screenBrightnessSettingDefault">102</integer>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. 
@@ -462,6 +516,6 @@
          some range of adjustment to dim the screen further than usual in very
          dark rooms. The contents of the screen must still be clearly visible
          in darkness (although they may not be visible in a bright room). -->
-    <integer name="config_screenBrightnessDark">2</integer>
+    <integer name="config_screenBrightnessDark">1</integer>
 
 </resources>
