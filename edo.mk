@@ -14,9 +14,23 @@
 # limitations under the License.
 #
 
+# Enable updating of APEXes
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
+# Include GSI keys
+$(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
+
+# Get non-open-source specific aspects
+$(call inherit-product, vendor/sony/pdx206/pdx206-vendor.mk)
+
 # VNDK
 PRODUCT_SHIPPING_API_LEVEL := 29
 PRODUCT_TARGET_VNDK_VERSION := 29
+PRODUCT_USE_PRODUCT_VNDK_OVERRIDE := true
+
+# Additional native libraries
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -53,6 +67,7 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_vendor=true
 
 PRODUCT_PACKAGES += \
+    checkpoint_gc \
     otapreopt_script
 
 # ADB
@@ -64,13 +79,23 @@ endif
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
-    libaacwrapper
+    libaacwrapper \
+    tinymix
+
+
+# Audio Policies
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/audio_policy_configuration.xml \
+#    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/audio/audio_policy_configuration.xml
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/audio/audio_policy_configuration.xml
+   frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/a2dp_audio_policy_configuration.xml \
+   frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/a2dp_in_audio_policy_configuration.xml \
+   frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/usb_audio_policy_configuration.xml \
+   frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/bluetooth_audio_policy_configuration.xml \
+   frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/r_submix_audio_policy_configuration.xml
 
-# Bluetooth
+# Bluetooth (AOSP stack has no sound on 17.1)
 PRODUCT_PACKAGES += \
     BluetoothQti
 
@@ -81,6 +106,12 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
+
+# Camera
+PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-service_64 \
+    vendor.qti.hardware.camera.postproc@1.0.vendor
 
 # Common init scripts
 PRODUCT_PACKAGES += \
@@ -107,6 +138,10 @@ PRODUCT_PACKAGES += \
 #    libqcomfm_jni \
 #    qcom.fmradio
 
+# Fstab (vendor.ipacm process causes a bootloop with this currently. See if it works with custom built vendor later.)
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_PRODUCT)/vendor_overlay/$(PRODUCT_TARGET_VNDK_VERSION)/etc/fstab.qcom
+
 # HIDL
 PRODUCT_PACKAGES += \
     libhidltransport \
@@ -120,7 +155,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/gpio-keys.kl
 
-# Livedisplay
+# Livedisplay (Not having this causes a bootloop on 17.1)
 PRODUCT_PACKAGES += \
     lineage.livedisplay@2.0-service-sdm
 

@@ -16,11 +16,11 @@
 
 COMMON_PATH := device/sony/edo-common
 
-TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
-
 BOARD_VENDOR := sony
 
 BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -42,6 +42,26 @@ TARGET_USES_64_BIT_BINDER := true
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := kona
 TARGET_NO_BOOTLOADER := true
+
+# Kernel
+BOARD_BOOT_HEADER_VERSION := 2
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 loop.max_part=7 cgroup.memory=nokmem,nosocket reboot=panic_warm buildproduct=pdx203 buildid=EDO-1.0.1-201109-1152 zram.backend=z3fold
+BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_RAMDISK_OFFSET := 0x01000000
+BOARD_KERNEL_SECOND_OFFSET := 0x00f00000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_KERNEL_OFFSET := 0x00008000
+BOARD_DTB_OFFSET           := 0x01f00000
+BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_KERNEL_SEPARATED_DTBO := true
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+
+# Use External DTC
+TARGET_KERNEL_ADDITIONAL_FLAGS := \
+    DTC_EXT=$(shell pwd)/prebuilts/misc/linux-x86/dtc/dtc \
+    DTC_OVERLAY_TEST_EXT=$(shell pwd)/prebuilts/misc/$(HOST_OS)-x86/libufdt/ufdt_apply_overlay
 
 # Platform
 TARGET_BOARD_PLATFORM := kona
@@ -67,6 +87,7 @@ TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
 
 # Camera
 TARGET_USES_QTI_CAMERA_DEVICE := true
+USE_DEVICE_SPECIFIC_CAMERA := true
 
 # Dex
 ifeq ($(HOST_OS),linux)
@@ -75,17 +96,8 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
-# Display
-TARGET_USES_HWC2 := true
-# These are part of pdx201 source. Seems to work fine without, but will check if these improve functionality later.
-# This may also depend on qcom-caf/display/ which maybe not even a thing for this phone. Will just have to see later.
-#TARGET_USES_GRALLOC1 := true
-#TARGET_USES_ION := true
-
-#MAX_EGL_CACHE_KEY_SIZE := 12*1024
-#MAX_EGL_CACHE_SIZE := 2048*1024
-
-#OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
+# Display - FIXME
+TARGET_USES_HWC2 := true    # <-- 
 
 # DRM
 TARGET_ENABLE_MEDIADRM_64 := true
@@ -119,9 +131,9 @@ BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SOMC_DYNAMIC_PARTITIONS_PARTITION_LIST := product system
 # Dynamic partition size = (Super partition size / 2) - 4MB
-BOARD_SOMC_DYNAMIC_PARTITIONS_SIZE := 6438256640
+BOARD_SOMC_DYNAMIC_PARTITIONS_SIZE := 6169821184
 BOARD_SUPER_PARTITION_GROUPS := somc_dynamic_partitions
-BOARD_SUPER_PARTITION_SIZE := 12884901888
+BOARD_SUPER_PARTITION_SIZE := 12348030976
 BOARD_SUPER_PARTITION_ERROR_LIMIT := 12360613888
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 TARGET_COPY_OUT_ODM := vendor/odm

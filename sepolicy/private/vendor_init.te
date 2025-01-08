@@ -5,3 +5,8 @@ allow vendor_init system_data_file:dir { ioctl open read setattr };
 
 # Allow vendor_init to set vendor_camera_prop
 set_prop(vendor_init, vendor_camera_prop)
+
+# Allow vendor_init to read drmdiag.load
+allow vendor_init persist_debug_prop:file { read };
+
+set_prop(vendor_init, vendor_other_prop)
