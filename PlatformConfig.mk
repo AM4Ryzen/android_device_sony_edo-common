@@ -14,13 +14,25 @@
 # limitations under the License.
 #
 
-COMMON_PATH := device/sony/edo-common
-
-BOARD_VENDOR := sony
-
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
+BOARD_VENDOR := sony
+
+COMMON_PATH := device/sony/edo-common
+
+# A/B
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    product \
+    recovery \
+    system \
+    vbmeta \
+    vbmeta_system
 
 # Architecture
 TARGET_ARCH := arm64
@@ -67,7 +79,12 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
 TARGET_BOARD_PLATFORM := kona
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno650
 
-# QCOM
+# Properties
+# TARGET_ODM_PROP += $(COMMON_PATH)/odm.prop
+# TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
+# TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
+
+# Qcom
 BOARD_USES_QCOM_HARDWARE := true
 BUILD_WITHOUT_VENDOR := true
 
@@ -177,3 +194,5 @@ BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
 BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
+
+# Inherit from the proprietary version
