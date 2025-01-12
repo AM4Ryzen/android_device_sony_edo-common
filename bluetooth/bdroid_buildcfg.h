@@ -20,10 +20,10 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
+#pragma push_macro("PROPERTY_VALUE_MAX")
+
 #include <cutils/properties.h>
 #include <string.h>
-
-#pragma push_macro("PROPERTY_VALUE_MAX")
 
 static inline const char* getBTDefaultName()
 {
