@@ -14,17 +14,20 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.lights-service.sony_edo",
+    name: "android.hardware.light@2.0-service.sony_edo",
     relative_install_path: "hw",
-    init_rc: ["android.hardware.lights.sony_edo.rc"],
-    vintf_fragments: ["android.hardware.lights.sony_edo.xml"],
-    srcs: ["main.cpp", "Lights.cpp"],
+    init_rc: ["android.hardware.light@2.0-service.sony_edo.rc"],
+    defaults: ["hidl_defaults"],
+    srcs: ["main.cpp", "Light.cpp"],
     shared_libs: [
         "libbase",
-        "liblog",
         "libhardware",
-        "libbinder_ndk",
-        "android.hardware.light-V1-ndk_platform",
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libhwbinder",
+        "libutils",
+        "android.hardware.light@2.0",
     ],
     proprietary: true,
 }
